@@ -10,7 +10,7 @@ version: "3"
 services:
   twingate_client:
     container_name: twingate_client
-    image: test:a
+    image: ghcr.io/docker-collection/twingate_headless:latest
     cap_add:
       - NET_ADMIN
     devices:
