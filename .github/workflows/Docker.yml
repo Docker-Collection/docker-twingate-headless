@@ -1,0 +1,29 @@
+name: Docker
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 16 * * 1"
+  push:
+    branches:
+      - main
+    paths:
+      - Dockerfile
+      - entrypoint.sh
+  pull_request:
+    paths:
+      - Dockerfile
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker:
+    name: docker build
+    uses: Docker-Collection/reusable-workflows/.github/workflows/docker-build.yml@main
+    with:
+      docker_name: "ghcr.io/docker-collection/twingate_headless"
+      docker_label_author: "Efina"
+      docker_label_title: "Docker Twingate Headless"
+      docker_label_description: "Twingate internal headless connect"
