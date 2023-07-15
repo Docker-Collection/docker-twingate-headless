@@ -1,4 +1,4 @@
-FROM bitnami/minideb:bullseye@sha256:fc6675eb3fa42136fc5fa2f0bcb02880f5b4649f9597c2d81301f52936a1e8f1
+FROM bitnami/minideb:bullseye@sha256:3992f1a92f380becd1646e88c44da3081ed5a141e5b0673614c5cfcea2443779
 
 WORKDIR /app
 
