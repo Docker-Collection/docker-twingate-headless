@@ -1,3 +1,11 @@
+FROM golang:1.20.6 as pf
+
+WORKDIR /build
+ENV GO111MODULE=on
+COPY main.go /build
+
+RUN CGO_ENABLED=0 go build main.go && mv main pf
+
 FROM bitnami/minideb:bullseye@sha256:ab66b27b6ddda9210bbdfa62fa656f2f75eabcdde040bc16792f8de7ab330c2e
 
 WORKDIR /app
@@ -11,5 +19,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /app/
+COPY --from=pf /build/pf /app/
 
 ENTRYPOINT [ "/app/entrypoint.sh" ]

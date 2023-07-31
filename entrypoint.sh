@@ -1,33 +1,46 @@
 #!/bin/bash
 
-pid=0
+pid_twingate=0
+pid_port_forwarding=0
 
 term_handler() {
-  if [ "$pid" -ne 0 ]; then
-    kill -SIGTERM "$pid"
-    wait "$pid"
+  if [ "$pid_twingate" -ne 0 ]; then
+    kill -SIGTERM "$pid_twingate"
+    wait "$pid_twingate"
   fi
+
+  if [ "$pid_port_forwarding" -ne 0 ]; then
+    kill -SIGTERM "$pid_port_forwarding"
+    wait "$pid_port_forwarding"
+  fi
+
   exit 143;
 }
 
 trap 'kill ${!}; term_handler' TERM
 
-if [ ! -z "$SERVICE_KEY" ]; then
+if [ -n "$SERVICE_KEY" ]; then
     echo "$SERVICE_KEY" | twingate setup --headless=-
     echo "Start twingate..."
     twingate start &
-    pid="$!"
+    pid_twingate="$!"
 
     sleep 3s
 
     TWINGATE_STATUS=$(twingate status)
     if [[ "$TWINGATE_STATUS" != 'online' ]]; then
-        echo "Exiting with error as Twingate is not connected"
+        echo "Exiting with an error as Twingate is not connected"
         exit 1
     fi
 else
     echo "ERROR! No service key found, exit..."
     exit 1
+fi
+
+if [ "$ENABLE_PORT_FORWARDING" = true ]; then
+  # Start the Port Forwarding program
+  ./pf &
+  pid_port_forwarding="$!"
 fi
 
 while :; do
