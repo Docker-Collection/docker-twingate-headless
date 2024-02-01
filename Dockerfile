@@ -1,4 +1,4 @@
-FROM golang:1.21.6@sha256:0c22572a0b01ce93bb9d1f0bea2f198b6b827225a194a1f3a185d0fd4b4513b7 as pf
+FROM golang:1.21.6@sha256:4d1942cb703999c3acd03b8efe5cc588cb5e39bace931d876de170e16d44e2cd as pf
 
 WORKDIR /build
 ENV GO111MODULE=on
