@@ -6,7 +6,7 @@ COPY main.go /build
 
 RUN CGO_ENABLED=0 go build main.go && mv main pf
 
-FROM bitnami/minideb:bullseye@sha256:00fb637f8cac50619153f79def6f0c3da3452bd698e17fb306b7bc5bb413bf68
+FROM bitnami/minideb:bullseye@sha256:56958b08ec45c04e63e7c5fdc01c45e800b303651f3915e5fd1ac1930cd263e9
 
 WORKDIR /app
 
