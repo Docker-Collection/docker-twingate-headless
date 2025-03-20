@@ -19,6 +19,15 @@ term_handler() {
 
 trap 'kill ${!}; term_handler' TERM
 
+if [ -n "$SERVICE_KEY_PATH" ]; then
+    if [ -f "$SERVICE_KEY_PATH" ]; then
+        SERVICE_KEY=$(cat "$SERVICE_KEY_PATH")
+    else
+        echo "ERROR! Service key file '$SERVICE_KEY_PATH' not found, exit..."
+        exit 1
+    fi
+fi
+
 if [ -n "$SERVICE_KEY" ]; then
     echo "$SERVICE_KEY" | twingate setup --headless=-
     echo "Start twingate..."
