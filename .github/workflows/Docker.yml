@@ -21,7 +21,7 @@ concurrency:
 jobs:
   docker:
     name: docker build
-    uses: Docker-Collection/reusable-workflows/.github/workflows/docker-build.yml@main
+    uses: Docker-Collection/reusable-workflows/.github/workflows/docker-build.yml@07487edb41e148ff9fb32f696c554bc48a0e376f # main
     with:
       docker_name: "ghcr.io/docker-collection/twingate_headless"
       docker_label_author: "Efina"
